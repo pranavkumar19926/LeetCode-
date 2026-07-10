@@ -29,7 +29,7 @@ public:
     int pathSum(TreeNode* root, int targetSum) {
 
         unordered_map<long long, int> mp;
-        mp[0] = 1;
+        mp[0] ++;
 
         ans(root, targetSum, 0, mp);
 
