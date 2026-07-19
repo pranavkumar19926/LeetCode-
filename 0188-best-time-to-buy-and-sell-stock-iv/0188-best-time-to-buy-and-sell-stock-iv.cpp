@@ -1,37 +1,38 @@
 class Solution {
 public:
 
-    int ans(vector<int>& prices, bool buy, int val, int in, int c , vector<vector<vector<int>>> &dp) {
 
-        if (in == prices.size() || c == val)
-            return 0;
 
-            if(dp[in][c][buy]!=-1){
+    int maxProfit(int k, vector<int>& prices) {
+               int n=prices.size();
+                int p=k;
+        vector<vector<vector<int>>> dp( n+1 , vector<vector<int>>( k+1 , vector<int>(2 , 0) ) );
 
-                return dp[in][c][buy];
-            }
+        for(int i=n-1 ; i>=0 ; i--){
 
-        if (buy == false) {
+            for(int j=p-1 ; j>=0 ; j--){
 
-            return dp[in][c][buy]=max(
-                -prices[in] + ans(prices, true, val, in + 1, c , dp),
-                ans(prices, false, val, in + 1, c , dp)
+                for(int k=0 ; k<=1 ; k++){
+                        
+                           if (k == 0) {
+
+             dp[i][j][k]=max(
+                -prices[i] + dp[i+1][j][1], dp[i+1][j][0]
             );
         }
         else {
 
-            return dp[in][c][buy]=max(
-                prices[in] + ans(prices, false, val, in + 1, c + 1 , dp),
-                ans(prices, true, val, in + 1, c , dp)
+             dp[i][j][k]=max(
+                prices[i] +dp[i+1][j+1][0], dp[i+1][j][1]
             );
+       
+
+                }
+            }
         }
-    }
 
-    int maxProfit(int k, vector<int>& prices) {
-               int n=prices.size();
+        }
 
-        vector<vector<vector<int>>> dp( n+1 , vector<vector<int>>( k+1 , vector<int>(2 , -1) ) );
-
-        return ans(prices, false, k, 0, 0 , dp);
+        return dp[0][0][0] ;
     }
 };
