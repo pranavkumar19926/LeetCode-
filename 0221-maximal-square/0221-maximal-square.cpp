@@ -5,12 +5,25 @@ public:
         int n = matrix.size();
         int m = matrix[0].size();
 
-        vector<vector<int>> ans(n + 1, vector<int>(m + 1, 0));
+        vector<vector<int>> ans(n, vector<int>(m, 0));
 
         int val = 0;
 
-        for (int i = n - 1; i >= 0; i--) {
-            for (int j = m - 1; j >= 0; j--) {
+        // Initialize last row
+        for (int i = 0; i < m; i++) {
+            ans[n - 1][i] = matrix[n - 1][i] - '0';
+            val = max(val, ans[n - 1][i]);
+        }
+
+        // Initialize last column
+        for (int i = 0; i < n; i++) {
+            ans[i][m - 1] = matrix[i][m - 1] - '0';
+            val = max(val, ans[i][m - 1]);
+        }
+
+        // Fill remaining cells
+        for (int i = n - 2; i >= 0; i--) {
+            for (int j = m - 2; j >= 0; j--) {
 
                 if (matrix[i][j] == '1') {
 
