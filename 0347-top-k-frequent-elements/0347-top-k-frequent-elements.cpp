@@ -1,44 +1,55 @@
 class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
-                  
-                  priority_queue<pair<int,int> > pq;
 
-                        unordered_map<int,int> mp;
+        vector<int> ans;
 
-                  for(int i=0 ; i<nums.size() ; i++){
-                            mp[nums[i]]++;
-                  }
+            vector<vector<int>> bucket(nums.size()+1 );
+            unordered_map<int,int> mp;
 
-                   for(auto it=mp.begin() ; it!=mp.end() ; it++){
-                               
+            for(int i=0 ; i<nums.size() ; i++){
 
-                               pq.push(make_pair(it->second , it->first ));
+                mp[nums[i]]++;
+            } 
 
 
-                   }
+            for(auto it=mp.begin() ; it!=mp.end() ; it++){
 
 
-                      vector<int> ans;
-
-                  while(!pq.empty() && k!=0){
-
-
-                            int count=pq.top().first;
-
-                            int val=pq.top().second;
-
-                              pq.pop();
-
-                            ans.push_back(val);        
-
-                             k--;
-                  }
+                   bucket[it->second].push_back(it->first);
+            }
 
 
+            for(int i=bucket.size()-1 ; i>=0 ; i--){
 
-                  return ans;
+                           bool va=false;
+
+                      for(int j=0 ; j<bucket[i].size() ; j++){
+                                    
+                                    if(k<=0){
+
+                                        va=true;
+                                        break;
+                                    }
+
+                                   int val=bucket[i][j];
+
+                                   ans.push_back(val );
 
 
+                                   k--;
+
+
+                      }
+
+                      if(va==true){
+
+                        break;
+                      }
+
+            }
+
+
+            return ans;  
     }
 };
