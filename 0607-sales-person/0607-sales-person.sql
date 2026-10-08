@@ -1,5 +1,5 @@
 WITH temp AS (
-    SELECT c.com_id, o.sales_id
+    SELECT DISTINCT o.sales_id
     FROM Company c
     INNER JOIN Orders o
         ON c.com_id = o.com_id
