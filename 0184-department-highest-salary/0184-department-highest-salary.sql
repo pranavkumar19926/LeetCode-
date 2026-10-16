@@ -1,0 +1,6 @@
+# Write your MySQL query statement belo
+
+               
+
+
+ SELECT d.name AS Department , t.name AS Employee , t.salary AS Salary FROM Department d  JOIN  (SELECT id , name , salary ,departmentID , RANK() OVER (PARTITION BY departmentId ORDER BY salary DESC) AS rnk FROM Employee ) t ON d.id = t.departmentId WHERE t.rnk =1 ;
