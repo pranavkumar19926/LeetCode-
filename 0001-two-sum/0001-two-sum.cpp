@@ -3,14 +3,29 @@ class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
 
-        int n = nums.size();
+        vector<pair<int, int>> arr;
 
-        for (int i = 0; i < n; i++) {
-            for (int j = i + 1; j < n; j++) {
+        for (int i = 0; i < nums.size(); i++) {
+            arr.push_back({nums[i], i});
+        }
 
-                if (nums[i] + nums[j] == target) {
-                    return {i, j};
-                }
+        sort(arr.begin(), arr.end());
+
+        int left = 0;
+        int right = arr.size() - 1;
+
+        while (left < right) {
+
+            long long sum = (long long)arr[left].first + arr[right].first;
+
+            if (sum == target) {
+                return {arr[left].second, arr[right].second};
+            }
+            else if (sum < target) {
+                left++;
+            }
+            else {
+                right--;
             }
         }
 
